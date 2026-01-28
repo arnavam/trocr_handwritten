@@ -6,21 +6,28 @@ class LayoutParserSettings:
     path_folder: str = "data/raw/images"
     path_output: str = "data/processed/images/"
     path_model: str = None
-    hf_repo: str = "agomberto/historical-layout-ft"
-    hf_filename: str = "20241119_v2_yolov10_50_finetuned.pt"
+    # Public DocLayout-YOLO model (DocStructBench has 10 classes for general documents)
+    hf_repo: str = "juliozhao/DocLayout-YOLO-DocStructBench"
+    hf_filename: str = "doclayout_yolo_docstructbench_imgsz1024.pt"
     device: str = "cpu"
     conf: float = 0.2
     iou: float = 0.5
     create_annotation_json: bool = True
 
     def __post_init__(self):
+        # DocStructBench classes (general document layout)
+        # See: https://github.com/opendatalab/DocLayout-YOLO
         self.class_names = {
-            "0": "Title",
-            "1": "En-tête",
-            "2": "Marge",
-            "3": "Nom",
-            "4": "Plein Texte",
-            "5": "Signature",
-            "6": "Table",
-            "7": "Section",
+            "0": "title",
+            "1": "plain text",
+            "2": "abandon",
+            "3": "figure",
+            "4": "figure_caption",
+            "5": "table",
+            "6": "table_caption",
+            "7": "table_footnote",
+            "8": "isolate_formula",
+            "9": "formula_caption",
         }
+        # Text classes for line segmentation
+        self.text_classes = ["plain text", "title"]

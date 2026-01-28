@@ -38,6 +38,7 @@ h11 = ">=0.16.0"
 tornado = ">=6.5"
 fonttools = ">=4.60.2"
 requests = ">=2.32.4"
+groq = "^1.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -53,3 +54,5 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 s3-manage = "trocr_handwritten.utils.s3_cli:cli"
+segment-lines = "trocr_handwritten.segmentation.segment_lines:main"
+kraken-segment = "trocr_handwritten.segmentation.kraken_segment:main"

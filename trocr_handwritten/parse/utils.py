@@ -19,11 +19,11 @@ class YOLOv10Model:
         self.iou = settings.iou
         if settings.path_model:
             self.load_model_from_local(settings.path_model, logger)
-        elif settings.hf_repo and settings.hf_filename:
+        elif settings.hf_repo:
             self.load_model_from_hf(settings.hf_repo, settings.hf_filename, logger)
         else:
             raise ValueError(
-                "Either path_model or hf_repo and hf_filename must be provided"
+                "Either path_model or hf_repo must be provided"
             )
 
     def load_model_from_hf(self, hf_repo, hf_filename, logger):
@@ -32,16 +32,22 @@ class YOLOv10Model:
 
         Args:
             hf_repo: Repository name on HuggingFace Hub
-            hf_filename: Filename of the model on HuggingFace Hub
+            hf_filename: Filename of the model on HuggingFace Hub (optional)
             logger: Logger
         Returns:
             YOLOv10: YOLOv10 model
         """
         try:
-            logger.info("Trying to load model from HuggingFace Hub...")
-            filepath = hf_hub_download(repo_id=hf_repo, filename=hf_filename)
-            logger.info(f"Model loaded from HuggingFace Hub: {filepath}")
-            self.model = YOLOv10(filepath)
+            logger.info(f"Loading model from HuggingFace Hub: {hf_repo}")
+            if hf_filename:
+                # Use hf_hub_download for specific file
+                filepath = hf_hub_download(repo_id=hf_repo, filename=hf_filename)
+                logger.info(f"Model file downloaded: {filepath}")
+                self.model = YOLOv10(filepath)
+            else:
+                # Use from_pretrained for standard HF model repos
+                self.model = YOLOv10.from_pretrained(hf_repo)
+                logger.info(f"Model loaded via from_pretrained: {hf_repo}")
         except Exception as e:
             logger.error(f"Error loading model from HuggingFace Hub: {e}")
             raise ValueError(f"Error loading model from HuggingFace Hub: {e}")

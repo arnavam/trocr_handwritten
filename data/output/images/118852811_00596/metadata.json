@@ -1,0 +1,22 @@
+{
+    "figure": [
+        {
+            "cropped_image_name": "000.jpg",
+            "coordinates": {
+                "x": 562,
+                "y": 59,
+                "width": 2793,
+                "height": 2341
+            }
+        },
+        {
+            "cropped_image_name": "001.jpg",
+            "coordinates": {
+                "x": 1921,
+                "y": 238,
+                "width": 1350,
+                "height": 253
+            }
+        }
+    ]
+}

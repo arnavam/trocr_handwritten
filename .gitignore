@@ -1,5 +1,5 @@
-# Ignorer le dossier data
-data/
+# # Ignorer le dossier data
+# data/
 
 # Ignorer les modèles
 models/
